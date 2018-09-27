@@ -1,4 +1,4 @@
-package johnmmm.mytest_action;
+package johnmmm.mytest_action.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import johnmmm.mytest_action.R;
 
 /**
  * Created by mac on 2018/9/23.

@@ -5,4 +5,8 @@
 
     <string name="quit">退出</string>
     <string name="about">关于</string>
+
+    <string name="look_up_info">查看信息</string>
+    <string name="initial">DBinit</string>
+    <string name="delete">DBdelete</string>
 </resources>

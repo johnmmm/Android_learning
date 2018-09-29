@@ -2,6 +2,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="johnmmm.mytest_action.activity.MainActivity">
+
+    <item
+        android:title="@string/initial"
+        android:id="@+id/main_menu_initial"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:title="@string/delete"
+        android:id="@+id/main_menu_delete_db"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/main_menu_look_up_info"
+        android:title="@string/look_up_info"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

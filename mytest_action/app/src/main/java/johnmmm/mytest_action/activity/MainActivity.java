@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import johnmmm.mytest_action.R;
+import johnmmm.mytest_action.data.JohnSQLCreateNew;
+import johnmmm.mytest_action.data.JohnSQLOpenHelper;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,32 +23,45 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_age;
     String msg = "Android : ";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.content_main);
-        Log.d(msg, "The onCreate() event");
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+    public void initTextview(){
         tv_name = (TextView) findViewById(R.id.tv_name);
         tv_age = (TextView) findViewById(R.id.tv_age);
         tv_name.setText(name);
         tv_age.setText(String.valueOf(age));
+    }
 
+    public void initActionBar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("信息录入");
+        setSupportActionBar(toolbar);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = null;
+                switch (item.getItemId()){
+                    case R.id.main_menu_initial:
+                        JohnSQLCreateNew.getInstance(JohnSQLOpenHelper.
+                                getInstance(getApplicationContext())).createNewSqlite();
+                        break;
+                    case R.id.main_menu_delete_db:
+                        JohnSQLCreateNew.getInstance(JohnSQLOpenHelper.
+                                getInstance(getApplicationContext())).removeAll();
+                        break;
+                    case R.id.main_menu_look_up_info:
+                        //TODO: new intent to another activity
+                        break;
+                    case R.id.action_settings:
+                        break;
+                }
+                return true;
+            }
+        });
+    }
+
+    public void initButtons(){
         Button button1 = (Button) findViewById(R.id.button1);
         Button button2 = (Button) findViewById(R.id.button2);
-
-        System.out.println("??");
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +82,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 2);
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.content_main);
+        Log.d(msg, "The onCreate() event");
+
+        initTextview();
+        initActionBar();
+        initButtons();
+
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     @Override

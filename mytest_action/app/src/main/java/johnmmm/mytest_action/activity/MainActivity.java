@@ -14,14 +14,19 @@ import android.util.Log;
 import johnmmm.mytest_action.R;
 import johnmmm.mytest_action.data.JohnSQLCreateNew;
 import johnmmm.mytest_action.data.JohnSQLOpenHelper;
+import johnmmm.mytest_action.fragment.InfoListFragment;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int INPUT_NAME_ACTIVITY = 1;
+    public static final int INPUT_AGE_ACTIVITY = 2;
+    public static final int INFO_LIST_ACTIVITY = 3;
 
     private String name = "Johnmmm";
     private int age = 21;
     private TextView tv_name;
     private TextView tv_age;
-    String msg = "Android : ";
+    String msg = "John APP : ";
 
     public void initTextview(){
         tv_name = (TextView) findViewById(R.id.tv_name);
@@ -39,7 +44,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Intent intent = null;
-                switch (item.getItemId()){
+                Log.d(msg, "click");
+                switch (item.getItemId()) {
                     case R.id.main_menu_initial:
                         JohnSQLCreateNew.getInstance(JohnSQLOpenHelper.
                                 getInstance(getApplicationContext())).createNewSqlite();
@@ -50,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.main_menu_look_up_info:
                         //TODO: new intent to another activity
+                        Log.d(msg, "ready to in");
+                        intent = new Intent(MainActivity.this, InfoListActivity.class);
+                        startActivityForResult(intent, INFO_LIST_ACTIVITY);
                         break;
                     case R.id.action_settings:
                         break;
@@ -69,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, InputActivity.class);
                 intent.putExtra("key", "name");
                 intent.putExtra("value", name);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, INPUT_NAME_ACTIVITY);
             }
         });
 
@@ -79,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, InputActivity.class);
                 intent.putExtra("key", "age");
                 intent.putExtra("value", String.valueOf(age));
-                startActivityForResult(intent, 2);
+                startActivityForResult(intent, INPUT_AGE_ACTIVITY);
             }
         });
     }
@@ -106,16 +115,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode == 1){
+        if (resultCode == 1) {
             String result = data.getStringExtra("result");
-            if (requestCode == 1){
+
+            if (requestCode == INPUT_NAME_ACTIVITY) {
                 name = result;
                 tv_name.setText(result);
-            }else if (requestCode == 2){
-                try{
+            }
+
+            else if (requestCode == INPUT_AGE_ACTIVITY) {
+
+                try {
                     age = Integer.parseInt(result);
                     tv_age.setText(result);
-                }catch (RuntimeException e){
+                }
+
+                catch (RuntimeException e) {
                     e.printStackTrace();
                 }
             }

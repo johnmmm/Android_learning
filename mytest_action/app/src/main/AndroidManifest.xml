@@ -23,6 +23,10 @@
             android:name=".activity.InputActivity"
             android:label="@string/input_name">
         </activity>
+        <activity
+            android:name=".activity.InfoListActivity"
+            android:label="info_list_action">
+        </activity>
 
     </application>
 
